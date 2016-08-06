@@ -1,6 +1,8 @@
 The MIT License (MIT)
 
-Copyright (c) 2015 Maximilian Stoiber
+Copyright for portions of project rrmg are held by Maximilian Stoiber, 2015, as part of project mxstbr/react-boilerplate.
+
+All other copyright for project rrmg are held by Tom Forrer, 2016.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
