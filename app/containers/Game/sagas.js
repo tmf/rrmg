@@ -2,21 +2,21 @@
  * 
  */
 
-import { take, put, call, delay } from 'redux-saga/effects';
+import { take, put } from 'redux-saga/effects';
 import { START } from 'containers/Game/constants';
 import { tick } from 'containers/Game/actions';
 
 
-const nextFrame = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const nextFrame = () => new Promise(resolve => requestAnimationFrame(resolve));
 
 export function* gameLoop() {
   
   while (true) {
     let { engine } = yield take(START);
-    let delta = 1000 / 60;
+    let delta = 1000 / 30;
     
     while (true) {
-      yield nextFrame(delta);
+      yield nextFrame();
       yield put(tick(engine, delta));
     }
   }

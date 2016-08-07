@@ -34,14 +34,17 @@ export class Game extends React.Component { // eslint-disable-line react/prefer-
   }
   componentWillMount() {
     let { Engine, Bodies, World } = Matter;
+    let random = (offset, span) => (offset + Math.random() * span);
     
-    let boxA = Bodies.rectangle(400, 200, 80, 80);
-    let boxB = Bodies.rectangle(450, 50, 80, 80);
-    let ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
+    let boxes = [
+      ...Array.from(new Array(100), () => Bodies.rectangle(random(0, 1000), random(0, 1000), random(40, 60), random(40, 60), { friction: 10, frictionStatic: 10})),
+      Bodies.rectangle(400, 800, 810, 60, { isStatic: true })
+    ];
 
     this.engine = Engine.create();
+    this.engine.enableSleeping = true;
     // add all of the bodies to the world
-    World.add(this.engine.world, [boxA, boxB, ground]);
+    World.add(this.engine.world, boxes);
   }
   componentDidMount() {
     this.props.startGame(this.engine);
@@ -53,10 +56,10 @@ export class Game extends React.Component { // eslint-disable-line react/prefer-
   render() {
     return (
       <div className={styles.game}>
-        <svg width="800" height="800"
-             viewBox="0 0 800 800">
-         {this.props.entities.map((entity, index) => (
-          <rect x={entity.position.x} y={entity.position.y} width="80" height="80" key={`entity-${index}`}/>
+        <svg width="100vw" height="100vh"
+             viewBox="0 0 1000 1000">
+         {this.props.entities.filter((entity) => (entity.position.x >= 0 && entity.position.y >= 0 && entity.position.x <= 1000 && entity.position.y <= 1000)).map((entity, index) => (
+          <polygon points={entity.vertices.map(vertex => `${vertex.x},${vertex.y}`).join(' ')} key={`entity-${entity.id}`}/>
           ))}
         </svg>
       </div>

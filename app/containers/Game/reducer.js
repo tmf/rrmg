@@ -30,9 +30,10 @@ function gameReducer(state = initialState, action) {
 
       let bodies = Matter.Composite.allBodies(engine.world),
           entities = bodies.map((body) => {
-
             return {
-              position: body.position
+              id: body.id,
+              position: { x: body.position.x.toFixed(1) , y: body.position.y.toFixed(1) },
+              vertices: body.vertices.map(vertex => ({ x: vertex.x.toFixed(1) , y: vertex.y.toFixed(1) })),
             };
           });
 
